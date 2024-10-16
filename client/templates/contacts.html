@@ -1,0 +1,75 @@
+
+{%extends 'base.html'%}
+{%block header %}
+<!-- Searching for contacts -->
+<form method="get" action="{% url 'search' %}" class="row row-cols-lg-auto g-3  text-center mt-3" >
+  <div class="col-md-3">
+    <input class="form-control" type="text" id="" placeholder="username" value="{{ filter.username }}" name="username">
+  </div>
+
+  <div class=" col-md-3">
+    <input class="form-control" type="text" id="" placeholder="email" value="{{ filter.email }}" name="email">
+  </div>
+
+  <div class="col-md-3">
+    <input class="form-control" type="text" id="" placeholder="tel" value="{{ filter.tel }}" name="tel">
+  </div>
+
+  <div class="col-md-3">
+    <button type="submit" class="btn btn-primary">search</button>
+  </div>
+</form>
+
+<!-- Exporting contacts -->
+
+<form method="get" action="{% url 'export' %}" class="row row-cols-lg-auto g-3  text-center mt-3">
+  <div class="form-group col-md-3 ">
+        <select name="type" id="" class="form-control">
+            <option value="json">json</option>
+            <option value="csv">csv</option>
+        </select>
+  </div>  
+  <div class="col-md-3">
+    <button type="submit" class="btn btn-primary">export</button>
+  </div>
+ 
+</form>
+
+<div class=" container">
+    {% for contact in contacts %}
+        <div class="card p-2 gap-3 m-" style=" margin-top: 1rem; height: auto;">
+            <img src="{{ contact.contact_avatar.url }}" alt="contact.contact_username" class="img-fluid img-thumbnail card-img-top" >
+            <div class="card-body caption gap-2">
+                <div class="text-center">
+                    <h3>{{contact.contact_username}}</h3>
+                    <!-- <h3>{{contact.contact_email}}</h3> -->
+                    <h3>{{contact.contact_tel}}</h3>
+                </div>
+                <div id="operations center gap-3" style="margin: 10px;">
+                    <a href="{% url 'showContact' contact.id %}" class="btn btn-primary">view</a>
+                    <a href="{% url 'editContact' contact.id %}" class="btn btn-primary">edit</a>
+                    <a href="{% url 'deleteContact' contact.id %}" class="btn btn-primary ">delete</a>
+                </div>
+                <a href="{% url 'send' contact.id %}" class="btn btn-primary">Message</a>
+               
+            </div>
+        </div>
+    {% endfor %}
+ 
+   <nav aria-label="Page text-center navigation example">
+        <ul class="pagination">
+            {% if contacts.has_previous %}
+             <li class="page-item"><a class="page-link" href="?page=1"}}> &laquo First</a></li>
+             <li class="page-item"><a class="page-link" href="?page={{contacts.previous_page_number}}">Previous</a></li>
+            {% endif %}
+            <li class="page-item"><P class="page-link" href="">Page {{contacts.number }} of {{ contacts.paginator.num_pages}}</P></li>
+            {% if contacts.has_next %}
+             <li class="page-item" ><a class="page-link" href="?page={{contacts.next_page_number}}">Next</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{contacts.paginator.num_pages}}">Last &raquo;</a></li>
+            {% endif %}
+
+        </ul>
+   </nav>
+</div>
+
+{% endblock %}

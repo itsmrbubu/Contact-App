@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{% block header %}
+  <div class="container-fluide">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 g-2" style="width: 20rem;">
+                    <img src="{{ contact.contact_avatar.url }}" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="card-title" id="client_name">{{contact.contact_username}}</h2>
+                        <h3 class="card-text">{{contact.contact_email}}</h3>
+                        <div id="operations">
+                            <a class="btn btn-primary" href="{% url 'editContact' contact.id %}">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+{%endblock %}
+

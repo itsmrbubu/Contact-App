@@ -1,0 +1,12 @@
+
+{%extends 'base.html'%}
+{%block header %}
+<div class="container mt-3">
+  <h3>Edit profile</h3>
+  <form action="" method="POST" enctype="multipart/form-data" class="form-control d-grid gap-2">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-primary">update</button>
+  </form>
+</div>
+{%endblock %}

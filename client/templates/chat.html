@@ -1,0 +1,54 @@
+
+{%extends 'base.html'%}
+{%block header %}
+<section>
+  <div class="container py-5">
+     <div class="row d-flex justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="card" id="chat2">
+                <div class="card-header d-flex justify-content-between align-items-center p-3">
+                    <h5 class="mb-0">Chat</h5>
+                    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm" data-mdb-ripple-color="dark">view more</button>
+                </div>
+                <div class="card-body" data-mdb-perfect-scrollbar-init style="position: relative; height: 400px">
+                    <div class="divider d-flex align-items-center mb-4">
+                    <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Today</p>
+                    </div>
+                    {% for message in messages  %}
+                        {% if message.message_from.id == request.session.id %}
+                            <div class="d-flex flex-row justify-content-start mb-4">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp" alt="avatar 1" style="width: 20px; height: 20px;">
+                                <div>
+                                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{message.message_body}}</p>
+                                    <p class="small ms-3 mb-3 rounded-3 text-muted">{{message.message_date}}</p>
+                                </div>
+                            </div>
+                        {% else%}
+                            <div class="d-flex flex-row justify-content-end">
+                                <div>
+                                    <p class=" small p-2 ms-3 mb-1 rounded-3  bg-body-tertiary">{{message.message_body}}</p>
+                                    <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">{{message.message_date}}</p>
+                                </div>
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"alt="avatar 1" style="width: 20px; height: 20px;">
+                            </div>  
+                        {% endif %}
+                    {% endfor %} 
+                </div>      
+            
+                <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                    alt="avatar 3" style="width: 40px; height: 100%;">
+                    <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form}}
+                    <button type="submit" class="btn btn-primary" style="margin-top:5px;">send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
